@@ -9,6 +9,9 @@ def f(x):
 
 def sigmoid(x):
     return 1/(1+math.exp(-x))
+def modsigmoid(x):
+    return 2/(1+math.exp(abs(x)))
+
 
 class Value:
 
@@ -130,7 +133,16 @@ class Value:
             self.grad += out.data*out.grad
         out._backward = _backward
         return out
-
+    def reLu(self):
+        x = self.data
+        out = Value(max(0, x), (self, ), 'reLu')
+        def _backward():
+            if x > 0:
+                self.grad += out.grad
+            else:
+                self.grad += 0
+        out._backward = _backward
+        return out
     
     def sigmoid(self):
         x = self.data
@@ -150,6 +162,21 @@ class Value:
             self.grad += (1/x)*out.grad
         out._backward = _backward
         return out
+    
+    def modsigmoid(self):
+        x = self.data
+        s = modsigmoid(x)
+        out = Value(s, (self,), 'modsigmoid')
+
+        def _backward():
+            if x >= 0:
+                self.grad += -((2*x)/(x*(1+x)**2))*out.grad
+            else:
+                self.grad += -((2*x)/(-x*(1-x)**2))*out.grad
+
+        out._backward = _backward
+        return out
+        
 
     def sinc(self):
         if x == 0:
@@ -176,9 +203,10 @@ class Value:
         for node in reversed(topo):
             node._backward()
 class Neuron:
-    def __init__(self, nin):
+    def __init__(self, nin, activation='sigmoid'):
         self.w = [Value(random.uniform(-1, 1)) for _ in range(nin)]
         self.b = Value(random.uniform(-1, 1))
+        self.activation = activation
     
     def parameters(self):
         return self.w + [self.b]
@@ -186,14 +214,20 @@ class Neuron:
     def __call__(self, x): # Neuron()(x)
 
         act = sum((xi*wi for xi, wi in zip(x, self.w)), self.b)
-        out = act.sigmoid()
+        if self.activation == 'sigmoid':
+            out = act.sigmoid()
+        if self.activation == 'reLu':
+            out = act.reLu()
+        if self.activation == 'modsigmoid':
+            out = act.modsigmoid()
         return out
 
 
 
 class Layer:
-    def __init__(self, nin, nout):
-        self.neurons = [Neuron(nin) for _ in range(nout)]
+    def __init__(self, nin, nout, activation='sigmoid'):
+        self.neurons = [Neuron(nin, activation=activation) for _ in range(nout)]
+    
     def parameters(self):
         return [p for neuron in self.neurons for p in neuron.parameters()]
     def __call__(self, x):
