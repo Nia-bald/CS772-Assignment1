@@ -5,12 +5,12 @@
 4. Train and Test using 4-fold cross-validation
 5. Measure Precision
 6. Find out what the hidden layer neurons are doing (VIMP)
-
 ## To do:
 1. finalize the architecture
 3. see the difference when momentum term is introduced
 4. update the PPT
 5. give a proper analysis on results which are wrong
+
 
 ### Insights
 1. Xoring input at opposing ends of input might work but since xoring operation is not linearly separable it cannot be done by one neuron
