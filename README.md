@@ -5,6 +5,3 @@
 4. Train and Test using 4-fold cross-validation
 5. Measure Precision
 6. Find out what the hidden layer neurons are doing (VIMP)
-
-## To do:
-1. Try connecting 5 input to one neuron in the hidden layer and 5 input to other neuron in the hidden layer
