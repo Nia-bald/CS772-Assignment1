@@ -220,6 +220,8 @@ class Neuron:
             out = act.reLu()
         if self.activation == 'modsigmoid':
             out = act.modsigmoid()
+        if self.activation == '':
+            return act
         return out
 
 

@@ -7,4 +7,10 @@
 6. Find out what the hidden layer neurons are doing (VIMP)
 
 ## To do:
-1. Try connecting 5 input to one neuron in the hidden layer and 5 input to other neuron in the hidden layer
+1. finalize the architecture
+3. see the difference when momentum term is introduced
+4. update the PPT
+5. give a proper analysis on results which are wrong
+
+### Insights
+1. Xoring input at opposing ends of input might work but since xoring operation is not linearly separable it cannot be done by one neuron
