@@ -204,8 +204,8 @@ class Value:
             node._backward()
 class Neuron:
     def __init__(self, nin, activation='sigmoid'):
-        self.w = [Value(random.uniform(-1, 1)) for _ in range(nin)]
-        self.b = Value(random.uniform(-1, 1))
+        self.w = [Value(random.uniform(-2, 2)) for _ in range(nin)]
+        self.b = Value(random.uniform(-2, 2))
         self.activation = activation
     
     def parameters(self):
