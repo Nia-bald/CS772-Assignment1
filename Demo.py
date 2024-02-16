@@ -11,12 +11,12 @@ def predict(x):
 # Load model
 def loadModel():
     neuron1weightsbias, outputneuronweightsbias = [], []
-    with open(f'parameters/neuron1weightsbias2.pckl', 'rb') as file:
+    with open(f'parameters/neuron1weightsbias_fn_reLu.pckl', 'rb') as file:
         neuron1weightsbias = pickle.load(file)
     with open('parameters/outputneuronweightsbias2.pckl', 'rb') as file:
         outputneuronweightsbias = pickle.load(file)
-    hiddenLayer1_ = Layer(10, 1)
-    outputLayer_ = Layer(11, 1)
+    hiddenLayer1_ = Layer(10, 1, 'reLu')
+    outputLayer_ = Layer(11, 1, 'sigmoid')
 
     hiddenLayer1_.neurons[0].w = [Value(i) for i in neuron1weightsbias[:-1]]
     hiddenLayer1_.neurons[0].b = Value(neuron1weightsbias[-1])
