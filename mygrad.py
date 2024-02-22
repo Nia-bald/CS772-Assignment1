@@ -4,11 +4,9 @@ import matplotlib.pyplot as plt
 import random
 from typing import Any
 
-def f(x):
-    return 3*x**2 + 2*x + 4
-
 def sigmoid(x):
-    return 1/(1+math.exp(-x))
+    # print(x)
+    return 1/(1+np.exp(-x))
 def modsigmoid(x):
     return 2/(1+math.exp(abs(x)))
 
@@ -235,28 +233,3 @@ class Layer:
     def __call__(self, x):
         outs = [n(x) for n in self.neurons]
         return outs[0] if len(outs) == 1 else outs
-
-class MLP:
-    def __init__(self, nin, nouts):
-        sz = [nin] + nouts
-        self.layers = [Layer(sz[i], sz[i+1]) for i in range(len(nouts))]
-    def __call__(self, x):
-        for layer in self.layers:
-            x = layer(x)
-        return x
-    def parameters(self):
-        return [p for layer in self.layers for p in layer.parameters()]
-
-def fit(n, X, Y, epochs, learning_rate):
-    for k in range(epochs):
-        ypred = [n(x) for x in X]
-        loss = sum([(yout - ygt)**2 for ygt, yout in zip(Y, ypred)])
-        # resets all the grad to zero for our new weight and biases
-        for node in n.parameters():
-            node.grad = 0
-        # deposits all the gradients in the nodes
-        loss.backward()
-        # subtracts all the values by a fraction of gradient decent
-        for node in n.parameters():
-            node.data -= learning_rate*node.grad
-        # print(k, loss)

@@ -1,7 +1,6 @@
 import streamlit as st
 from mygrad import Layer, Value
 import pickle
-#!C:\Program Files\Python311\python.exe
 # Define the predict function
 def predict(x):
     x1 = hiddenLayer1(x)    
