@@ -1,7 +1,7 @@
 import streamlit as st
 from mygrad import Layer, Value
 import pickle
-
+#!C:\Program Files\Python311\python.exe
 # Define the predict function
 def predict(x):
     x1 = hiddenLayer1(x)    
@@ -13,7 +13,7 @@ def loadModel():
     neuron1weightsbias, outputneuronweightsbias = [], []
     with open(f'parameters/neuron1weightsbias_fn_reLu.pckl', 'rb') as file:
         neuron1weightsbias = pickle.load(file)
-    with open('parameters/outputneuronweightsbias2.pckl', 'rb') as file:
+    with open('parameters/outputneuronweightsbias_fn_reLu.pckl', 'rb') as file:
         outputneuronweightsbias = pickle.load(file)
     hiddenLayer1_ = Layer(10, 1, 'reLu')
     outputLayer_ = Layer(11, 1, 'sigmoid')
